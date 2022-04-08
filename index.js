@@ -1,6 +1,7 @@
 import { Client, Intents } from "discord.js";
 import { config } from "dotenv";
 import { keyList } from "./lib/commands/keyList.js";
+import { claimGame } from "./lib/commands/claimGame.js";
 config();
 
 const client = new Client({
@@ -15,12 +16,16 @@ client.on("ready", async () => {
 
 client.on("messageCreate", async (msg) => {
   // Movie Search Command
-  if (msg.content.toLowerCase().startsWith("!test")) {
+  if (msg.content.toLowerCase === "!test") {
     msg.channel.send("**Hi daddy!**");
   }
 
   //Key List Command
-  if (msg.content.toLowerCase().startsWith("!key list")) {
+  if (msg.content.toLowerCase() === "!game list") {
     await keyList(msg, "game");
+  }
+
+  if (msg.content.toLowerCase().startsWith("!game claim")) {
+    if (!msg.author.bot) await claimGame(msg);
   }
 });
